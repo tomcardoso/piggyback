@@ -8,4 +8,4 @@ To install the bookrmarklet, go to the URL below, fill out the form, then drag t
 
 https://tomcardoso.github.io/piggyback/
 
-Questions? @tom_cardoso
+Questions? [@tom_cardoso](http://twitter.com/tom_cardoso)
