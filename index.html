@@ -111,33 +111,33 @@
         opacity: 0.3;
       }
       .bookmarklet-text {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
+        font-weight: bold;
       }
       .bookmarklet-container {
         border: 1px solid black;
         border-radius: 5px;
         padding: 0.8rem;
-        top: -1px;
-        position: relative;
+        opacity: 0.2;
+        pointer-events: none;
+      }
+      .bookmarklet-container.active {
+        opacity: 1;
+        pointer-events: all;
+        border-width: 4px;
       }
       #bookmarklet {
-        padding: 0.3em 0.5em;
+        padding: 0.3em 1em;
         border-radius: 6px;
-        width: 100%;
         font-weight: bold;
         text-decoration: none;
         background: #969696;
         color: black;
-        opacity: 0.3;
-        pointer-events: none;
-        width: 10em;
         display: inline-block;
         text-align: center;
       }
-      #bookmarklet.active {
-        pointer-events: all;
+      .bookmarklet-container.active #bookmarklet {
         border: none;
-        opacity: 1;
         background: linear-gradient(270deg, #FFEE88, #00CC99);
         background-size: 400% 400%;
         -webkit-animation: BackgroundGradient 20s ease infinite;
@@ -150,7 +150,7 @@
     <div class="content">
       <h1><span>Piggyback bookmarklet</span></h1>
       <p>Filling out the Canadian government's <a href="https://open.canada.ca/en/search/ati">informal Access to Information and Privacy requests (ATIP) form</a> can be a bore, especially if you need to do several at a time. This bookmarklet makes the process easier by pre-filling out all the fields so that you can just hit "Submit."</p>
-      <p>Just fill out the form below, then drag the button into your bookmarks bar and you&rsquo;re good to go. The personal information you plug in below won&rsquo;t be sent anywhere and will never leave your browser. This bookmarklet will only work in latest versions of desktop Chrome and Firefox.</p>
+      <p>First, fill out the form below, then drag the button into your bookmarks bar and you&rsquo;re good to go. The personal information you plug in below won&rsquo;t be sent anywhere and will never leave your browser. This bookmarklet will only work in latest versions of desktop Chrome and Firefox.</p>
 
       <p class="bookmarklet-container">
         <span class="bookmarklet-text">Drag this button into your bookmarks bar →</span>
@@ -609,8 +609,6 @@
         form.addEventListener('submit', event => {
           event.preventDefault();
           const data = constructData(event.currentTarget.elements);
-          const bookmarklet = document.querySelector('#bookmarklet');
-          bookmarklet.classList.add('active');
 
           const bakedData = `window.piggybackData = {
             lang: '${data.lang}',
@@ -632,14 +630,19 @@
           // https://chriszarate.github.io/bookmarkleter/ before pasting below
           const bookmarkletCode = `javascript:'use%20strict';void%20function(){(function(){'replaceme';function%20a(a,b){var%20c=Array.from(a.options).map(function(a){return%20a.text});%22requestor-category%22===b%3Fa.value=c.indexOf(d.requestor):%22delivery-method%22===b%3Fa.value=c.indexOf(d.delivery):%22address-fieldset-state-province-select%22===b%3Fa.value=d.province:%22address-fieldset-country%22===b%3Fa.value=d.country:%22preferred-language-of-correspondence%22===b%3Fa.value=d.lang:%22consent%22===b%3Fa.value=%22Yes%22:void%200}function%20b(a,b){switch(b){case%22given-name%22:a.value=d.givenName;break;case%22family-name%22:a.value=d.familyName;break;case%22your-e-mail-address%22:a.value=d.email;break;case%22your-telephone-number%22:a.value=d.tel;break;case%22address-fieldset-address%22:a.value=d.address;break;case%22address-fieldset-city%22:a.value=d.city;break;case%22address-fieldset-postal-code%22:a.value=d.postal;break;default:}}function%20c(a){a.value=d.additionalComments}var%20d=window.piggybackData;if(d){[%22select%23edit-requestor-category%22,%22select%23edit-delivery-method%22,%22input%23edit-given-name%22,%22input%23edit-family-name%22,%22input%23edit-your-e-mail-address%22,%22input%23edit-your-telephone-number%22,%22textarea%23edit-additional-comments%22,%22input%23edit-address-fieldset-address%22,%22input%23edit-address-fieldset-city%22,%22select%23edit-address-fieldset-state-province-select%22,%22input%23edit-address-fieldset-postal-code%22,%22select%23edit-address-fieldset-country%22,%22select%23edit-preferred-language-of-correspondence%22,%22select%23edit-consent%22,%22input%23edit-details%22].map(function(d){var%20e=document.querySelector(d),f=d.replace(/%23.+/,%22%22),g=d.replace(/^.+%23edit-/,%22%22);%22select%22===f%3Fa(e,g):%22input%22===f%3Fb(e,g):%22textarea%22===f%3Fc(e):void%200});var%20e=document.querySelector(%22%23edit-actions%22);e.style.display=%22%22,e.scrollIntoView%26%26e.scrollIntoView({behavior:%22smooth%22})}})()}();`;
 
+          const bookmarklet = document.querySelector('#bookmarklet');
           bookmarklet.href = bookmarkletCode.replace("'replaceme'", bakedData);
 
-          // scroll back to top
-          document.documentElement.scrollTop = 0;
-          document.body.scrollTop = 0;
-          document.querySelector('.bookmarklet-container').style.borderWidth = '4px';
+          document.querySelector('.bookmarklet-container').classList.add('active');
+
           form.style.opacity = 0.2;
           form.style.pointerEvents = 'none';
+
+          // scroll back to top
+          if (document.documentElement.scrollIntoView) {
+            document.documentElement.scrollIntoView({ behavior: 'smooth' });
+          }
+
         });
       })();
     </script>
