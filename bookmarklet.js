@@ -103,4 +103,6 @@
 
   submitBtn.style.display = '';
 
+  if (submitBtn.scrollIntoView) submitBtn.scrollIntoView({ behavior: 'smooth' });
+
 })();
