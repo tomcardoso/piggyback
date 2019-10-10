@@ -611,8 +611,8 @@
           const data = constructData(event.currentTarget.elements);
           const bookmarklet = document.querySelector('#bookmarklet');
           bookmarklet.classList.add('active');
-          bookmarklet.href = `javascript:javascript: (function () { var e = document.createElement('script');
-          window.piggybackData = {
+
+          const bakedData = `window.piggybackData = {
             lang: '${data.lang}',
             requestor: '${data.requestor}',
             delivery: '${data.delivery}',
@@ -626,8 +626,14 @@
             province: '${data.province}',
             postal: '${data.postal}',
             country: '${data.country}'
-          };
-          e.setAttribute('src', 'https://tomcardoso.github.io/piggyback/bookmarklet.js'); e.setAttribute('class', 'piggyback-bookmarklet'); document.body.appendChild(e); })();`;
+          };`;
+
+          // Don't forget to run bookmarklet.js through
+          // https://chriszarate.github.io/bookmarkleter/ before pasting below
+          const bookmarkletCode = `javascript:'use strict';void function(){(function(){'replaceme';function a(a,b){var c=Array.from(a.options).map(function(a){return a.text});"requestor-category"===b?a.value=c.indexOf(d.requestor):"delivery-method"===b?a.value=c.indexOf(d.delivery):"address-fieldset-state-province-select"===b?a.value=d.province:"address-fieldset-country"===b?a.value=d.country:"preferred-language-of-correspondence"===b?a.value=d.lang:"consent"===b?a.value="Yes":void 0}function b(a,b){switch(b){case"given-name":a.value=d.givenName;break;case"family-name":a.value=d.familyName;break;case"your-e-mail-address":a.value=d.email;break;case"your-telephone-number":a.value=d.tel;break;case"address-fieldset-address":a.value=d.address;break;case"address-fieldset-city":a.value=d.city;break;case"address-fieldset-postal-code":a.value=d.postal;break;default:}}function c(a){a.value=d.additionalComments}var d=window.piggybackData;if(d){["select#edit-requestor-category","select#edit-delivery-method","input#edit-given-name","input#edit-family-name","input#edit-your-e-mail-address","input#edit-your-telephone-number","textarea#edit-additional-comments","input#edit-address-fieldset-address","input#edit-address-fieldset-city","select#edit-address-fieldset-state-province-select","input#edit-address-fieldset-postal-code","select#edit-address-fieldset-country","select#edit-preferred-language-of-correspondence","select#edit-consent","input#edit-details"].map(function(d){var e=document.querySelector(d),f=d.replace(/#.+/,""),g=d.replace(/^.+#edit-/,"");"select"===f?a(e,g):"input"===f?b(e,g):"textarea"===f?c(e):void 0});var e=document.querySelector("#edit-actions");e.style.display=""}})()}();`;
+
+          bookmarklet.href = bookmarkletCode.replace("'replaceme'", bakedData);
+
           // scroll back to top
           document.documentElement.scrollTop = 0;
           document.body.scrollTop = 0;
