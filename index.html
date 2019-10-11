@@ -51,9 +51,6 @@
         line-height: 1.4;
         margin-bottom: 0.9rem;
       }
-      p:last-of-type {
-        /* margin-bottom: 1rem; */
-      }
       a {
         color: black;
       }
@@ -61,10 +58,13 @@
         margin-top: 2em;
         margin-bottom: 2em;
       }
+      select, input, button {
+        height: 2.5rem;
+      }
       select, input, textarea, button {
         background: none;
         padding: 0.3em 0.4em;
-        border-radius: 6px;
+        border-radius: 5px;
         border: 2px solid black;
         font-weight: bold;
         text-decoration: none;
@@ -81,15 +81,12 @@
       label {
         text-transform: uppercase;
         letter-spacing: 1px;
-        font-size: 0.8rem;
+        font-size: 12px;
         font-family: Helvetica;
         font-weight: bold;
       }
-      select {
-        height: 2.05em;
-      }
       button {
-        padding-bottom: 0.45em;
+        padding-top: 5px;
       }
       button:hover {
         cursor: pointer;
@@ -214,7 +211,7 @@
 
         <div class="form-row-full">
           <label for="form-additional">Additional comments</label>
-          <textarea id="form-additional" name="Additional comments" rows="4" cols="80" placeholder="Additional comments"></textarea>
+          <textarea id="form-additional" name="Additional comments" rows="4" placeholder="Additional comments"></textarea>
         </div>
 
         <div class="form-row-full">
