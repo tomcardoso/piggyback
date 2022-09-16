@@ -1,7 +1,5 @@
 (function() {
 
-  'replaceme';
-
   const piggybackData = window.piggybackData;
 
   if (!piggybackData) return;
