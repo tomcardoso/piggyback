@@ -101,7 +101,7 @@
 
   const submitBtn = document.querySelector('#edit-actions');
 
-  submitBtn.style.display = '';
+  submitBtn.style.display = 'block';
 
   if (submitBtn.scrollIntoView) submitBtn.scrollIntoView({ behavior: 'smooth' });
 
