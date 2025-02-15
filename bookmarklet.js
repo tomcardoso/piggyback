@@ -29,53 +29,32 @@
     const options = Array.from(el.options)
       .map(d => d.text);
 
-    switch (fieldContents) {
-      case 'requestor-category':
-        el.value = options.indexOf(piggybackData.requestor);
-        break;
-      case 'delivery-method':
-        el.value = options.indexOf(piggybackData.delivery);
-        break;
-      case 'address-fieldset-state-province-select':
-        el.value = piggybackData.province;
-        break;
-      case 'address-fieldset-country':
-        el.value = piggybackData.country;
-        break;
-      case 'preferred-language-of-correspondence':
-        el.value = piggybackData.lang;
-        break;
-      case 'consent':
-        el.value = 'Yes';
-        break;
-    }
+    const map = {
+      'requestor-category': options.indexOf(piggybackData.requestor),
+      'delivery-method': options.indexOf(piggybackData.delivery),
+      'address-fieldset-state-province-select': piggybackData.province,
+      'address-fieldset-country': piggybackData.country,
+      'preferred-language-of-correspondence': piggybackData.lang,
+      'consent': 'Yes'
+    };
+
+    el.value = map[fieldContents];
   }
 
   function setInputValue(el, fieldContents) {
-    switch (fieldContents) {
-      case 'given-name':
-        el.value = piggybackData.givenName;
-        break;
-      case 'family-name':
-        el.value = piggybackData.familyName;
-        break;
-      case 'your-e-mail-address':
-        el.value = piggybackData.email;
-        break;
-      case 'your-telephone-number':
-        el.value = piggybackData.tel;
-        break;
-      case 'address-fieldset-address':
-        el.value = piggybackData.address;
-        break;
-      case 'address-fieldset-city':
-        el.value = piggybackData.city;
-        break;
-      case 'address-fieldset-postal-code':
-        el.value = piggybackData.postal;
-        break;
-      default:
-    }
+
+    const map = {
+      'given-name': piggybackData.givenName,
+      'family-name': piggybackData.familyName,
+      'your-e-mail-address': piggybackData.email,
+      'your-telephone-number': piggybackData.tel,
+      'address-fieldset-address': piggybackData.address,
+      'address-fieldset-city': piggybackData.city,
+      'address-fieldset-postal-code': piggybackData.postal
+    };
+
+    el.value = map[fieldContents];
+
   }
 
   function setTextareaValue(el) {
@@ -86,6 +65,7 @@
     const element = document.querySelector(entry),
       fieldType = entry.replace(/#.+/, ''),
       fieldContents = entry.replace(/^.+#edit-/, '');
+
     switch (fieldType) {
       case 'select':
         setSelectValue(element, fieldContents);
